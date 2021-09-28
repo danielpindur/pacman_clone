@@ -1,0 +1,6 @@
+{
+      "files.associations": {
+            "sdl_playground.h": "c",
+            "app.h": "c"
+      }
+}

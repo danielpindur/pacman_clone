@@ -10,7 +10,7 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_mixer.h>
 
-#include "game_controller.h"
+//#include "game_controller.h"
 
 typedef struct {
       SDL_Window* window;

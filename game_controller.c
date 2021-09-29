@@ -77,6 +77,8 @@ void menuInputs(Game* game, SDL_Event* event){
             case SDL_SCANCODE_RETURN:
                   //selected = true; ????????                   
                   break;
+            default:
+                  break;
       }               
 }
 
@@ -104,5 +106,38 @@ void gameInputs(Player* player, SDL_Event* event){
                   // Move right
                   player->newDirection = Right;           
                   break;
+            default:
+                  break;
       }      
+}
+
+void gameState_ctor(GameState* gameState){
+      gameState->state = Menu;
+      gameState->highscore = 0; // TODO: Load highscore
+      gameState->remainingPoints = 5; // TOOD:
+      gameState->enemiesMoveThisTurn = false;
+}
+
+void settings_ctor(Settings* settings){
+      settings->numberOfEnemies = 4; // TODO ???
+      settings->difficulty = 1; // TODO ??? Load from file ???
+}
+
+void game_ctor(Game* game){
+      App* app;
+      char name[] = "definitely not PACMAN";
+      app_ctor(app, 448, 496, name);
+      game->app = app;
+
+      UI* ui;
+      ui_ctor(ui, app);
+      game->ui = ui;
+
+      GameState* gameState;
+      gameState_ctor(gameState);
+      game->gameState = gameState;
+
+      Settings* settings;
+      settings_ctor(settings);
+      game->settings = settings;
 }

@@ -3,7 +3,7 @@
 #include "app.h"
 #include "utils.h"
 
-enum Direction{Right, Up, Left, Down};
+typedef enum {Right, Up, Left, Down} Direction;
 
 typedef struct {
     int health;

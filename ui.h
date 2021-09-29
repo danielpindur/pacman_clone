@@ -1,8 +1,14 @@
 #pragma once
 
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
+
+#include "graphics.h"
+#include "game_controller.h"
 #include "app.h"
 
-enum MenuItem{Difficulty, NumberOfEnemies, MuteMusic};
+typedef enum {Difficulty, NumberOfEnemies, MuteMusic} MenuItem;
 
 typedef struct{
     SDL_Texture* hearthSprite;
@@ -21,3 +27,5 @@ typedef struct{
     SDL_Texture* gameOverScore;
     SDL_Texture* gameOverHighscore;
 } UI;
+
+void ui_ctor(UI* ui, App* app);

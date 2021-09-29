@@ -1,21 +1,20 @@
 #include "app.h"
+#include "graphics.h"
+#include "game_controller.h"
 
 int main(){
-    
-    //Init
-    App app;
-    char name[] = "definitely not PACMAN";
-    app_ctor(&app, 448, 496, name);
-    
+
     Game game;
+    game_ctor(&game);
+
     Player player;
     
 
+
+    // Game loop
     SDL_Event event;
     bool quit = false;
 
-
-    // Game loop
     while (!quit)
     {
         //Eval Event
@@ -26,12 +25,12 @@ int main(){
                     quit = true;
                     break;
                 case SDL_KEYDOWN:
-                    switch (game.gameState){
+                    switch (game.gameState->state){
                         case Menu:
                             menuInputs(&game, &event);
                             break;
 
-                        case Game:
+                        case Play:
                             gameInputs(&player, &event);
                             break;
 
@@ -40,13 +39,27 @@ int main(){
                             break;
                     }
                     break;
+                default:
+                    break;
             }
         }
 
-        // Draw black background
-        SDL_SetRenderDrawColor(app.renderer, 0, 0, 0, 255); 
-        SDL_RenderClear(app.renderer);                      
+        clearScreen(game.app);            
 
+        // Render
+        switch (game.gameState->state){
+            case Menu:
+                renderMainMenu(&game);
+                break;
+
+            case Play:
+                
+                break;
+
+            case Over:
+                
+                break;            
+        }
 /*
         // Main menu
         if (player_prefs.program_state == 0){

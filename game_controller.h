@@ -4,7 +4,7 @@
 #include "ui.h"
 #include "player.h"
 
-enum State{Menu, Game, Over};
+typedef enum {Menu, Play, Over} State;
 
 typedef struct {
       State state;
@@ -27,3 +27,4 @@ typedef struct {
 
 void menuInputs(Game* game, SDL_Event* event);
 void gameInputs(Player* player, SDL_Event* event);
+void game_ctor(Game* game);

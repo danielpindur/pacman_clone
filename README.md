@@ -1,35 +1,83 @@
-# pacman_clone
-definitely not PACMAN
-Daniel Pindur, 2020
-Projekt do předmětu Úvod do programování
-------------------------------------------
-1. Překlad
-----------
-Překlad je prováděn pomocí CMake. Překlad vyžaduje knihovny SDL2, SDL2_IMAGE, SDL2_TTF, SDL2_MIXER a math.
+# pacman_clone  
+Definitely not PACMAN  
+Daniel Pindur, 2020  
+Project for the course *Introduction to Programming*  
 
-2. Fungování programu
----------------------
-Při spuštění programu proběhne načtení highscore ze souboru (nebo jeho vytvoření), načtení podoby mapy ze souboru map_data.bit a spuštění Main menu.
-V Main menu, je možné se pohybova pomocí U a S (resp. Up a Down). Při najetí na Play a následném stisknutí ENTER, dojde ke spuštění hry.
-Při najetí na konfigurační možnosti v menu, je možné pomodí A a D (resp. Right a Left) měnit hodnoty dané možnosti:
+---
 
-a) Difficulty - je možné nastavit obtížnost na Easy nebo Hard, na obtížnost Easy dochází k pohybu duchů jen jednou za dva snímky, hráče
-se tedy pohybuje 2x rychleji než duchové, na obtížnost Hard se duchové pohybují stejně rychle jako hráč
+## 1. Compilation  
 
-b) Number of ghosts - umožňuje zvolit množství nepřátel (min. 1, max 4)
+The project is built using **CMake**. It requires the following libraries:  
+- SDL2  
+- SDL2_IMAGE  
+- SDL2_TTF  
+- SDL2_MIXER  
+- Math library  
 
-c) Music - umožňuje ztlumit background hudbu
+---
 
-Při spuštění hry má hráč 3 životy a skóre 0. Za každou sebranou minci, se mu přičte skóre 1. Na začátku se čeká, než se začne hráč pohybovat
-(do té doby se nepohybují ani duchové). Poté co se hráč pohne, dojde k aktivaci duchů, kteří začnou pronásledovat hráče s využitím A* pathfinding 
-algoritmu. Hráč má oproti duchům možnost procháte "teleporty" na pravé a levé straně herního pole, které ko přenesou na opačnou stranu. Hra probíhá 
-tak dlouho, než hráč ztratí všechny 3 životy, tedy 3x dojde k chycení hráče duchy. Po chycení hráče dojde k ubrání životu a k resetu pozice všeho na mapě.
-Pokud hráč sesbírá všechny mince na mapě, dojde k resetu pozice všeho na mapě, bez ztráty životu hráče.
+## 2. Program Functionality  
 
-Po smrti hráče proběhne vyhodnocení, zda nové skóre je větší nebo měnší než highscore. Pokud je větší proběhne zápis daného skóre do souboru jako highscore
-a k aktualizaci highscore zobrazeného na obrazovce. Pomocí tlačítka ENTER je hráč schopný se vrátit zpět do Main menu, kde může opět změnit nastavení hry a 
-danou hru opět spustit.
+When the program starts, it:  
+1. Loads the high score from a file (or creates one if it doesn't exist).  
+2. Loads the map layout from the `map_data.bit` file.  
+3. Launches the **Main Menu**.  
 
-3. Memory leaky
----------------
-Po doběhnutí programu hlásí adress sanitizer memory leak o velikosti 17 bytu, což by měl být memory leak, který vzniká v rámci knihovny SDL.
+### Main Menu  
+
+In the Main Menu, you can navigate using the `U` and `S` keys (or `Up` and `Down` arrow keys).  
+- Hover over **Play** and press `ENTER` to start the game.  
+- Navigate to the configuration options, where you can adjust settings using `A` and `D` keys (or `Right` and `Left` arrows):  
+
+#### Configuration Options:  
+- **Difficulty:**  
+  - Choose between `Easy` and `Hard`.  
+  - On `Easy`, ghosts move once every two frames, making the player twice as fast as the ghosts.  
+  - On `Hard`, ghosts move at the same speed as the player.  
+- **Number of Ghosts:**  
+  - Select the number of enemies (minimum: 1, maximum: 4).  
+- **Music:**  
+  - Toggle the background music on or off.  
+
+---
+
+### Gameplay  
+
+The player starts with:  
+- **3 lives**  
+- **0 points**  
+
+- **Objective:**  
+  Collect coins scattered throughout the map. Each coin adds **1 point** to the player's score.  
+
+- **Gameplay Mechanics:**  
+  - At the beginning, the player and ghosts remain stationary until the player makes the first move.  
+  - Once the player moves, the ghosts activate and begin chasing the player using the **A* pathfinding algorithm**.  
+  - The player can use **teleporters** located on the left and right edges of the map to instantly appear on the opposite side.  
+  - The game ends when the player loses all 3 lives, i.e., gets caught by ghosts 3 times.  
+
+- **Ghost Catching Mechanics:**  
+  - When a ghost catches the player:  
+    - The player loses one life.  
+    - All positions on the map are reset.  
+  - If the player collects all the coins on the map:  
+    - All positions on the map are reset.  
+    - The player does not lose a life.  
+
+---
+
+### High Score  
+
+After the player loses all lives:  
+- The program checks if the new score is higher than the current high score.  
+- If it is, the high score is updated both in the file and on the screen.  
+
+From the **Game Over** screen, pressing `ENTER` allows the player to return to the Main Menu, adjust settings, and restart the game.  
+
+---
+
+## 3. Memory Leaks  
+
+After program termination, the address sanitizer reports a **memory leak of 17 bytes**. This appears to originate from within the **SDL library**.  
+
+---  
